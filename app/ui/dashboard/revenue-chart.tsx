@@ -2,6 +2,7 @@ import { generateYAxis } from '@/app/lib/utils';
 import { CalendarIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
 import { Revenue } from '@/app/lib/definitions';
+import { fetchRevenue } from '@/app/lib/data';
 
 // This component is representational only.
 // For data visualization UI, check out:
@@ -9,11 +10,18 @@ import { Revenue } from '@/app/lib/definitions';
 // https://www.chartjs.org/
 // https://airbnb.io/visx/
 
+/*
 export default async function RevenueChart({
   revenue,
 }: {
   revenue: Revenue[];
-}) {
+})
+*/
+
+export default async function RevenueChart() {
+  const revenue = await fetchRevenue();
+  // below is just a test to see the loading fallback skeleton 
+  // await new Promise((resolve) => setTimeout(resolve, 4000));
   const chartHeight = 350;
   // NOTE: comment in this code when you get to this point in the course
 
