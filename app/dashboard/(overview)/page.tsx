@@ -1,10 +1,10 @@
 //dashboard page
 
-import { lusitana } from "../ui/fonts";
+import { lusitana } from "../../ui/fonts";
 import CardWrapper, { Card } from '@/app/ui/dashboard/cards'
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
-import { fetchCardData, fetchLatestInvoices, fetchRevenue } from "../lib/data";
+import { fetchCardData, fetchLatestInvoices, fetchRevenue } from "../../lib/data";
 
 //this page is async so we can use await to fetch data 
 
