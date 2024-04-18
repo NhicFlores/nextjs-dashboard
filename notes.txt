@@ -2,6 +2,10 @@ NOTE : all important inline comments
 TODO : comments that are also reminders or tasks 
 HOW TO : examples of how to use certain syntax/techniques 
 
+This project doesn't use an API layer, so you don't want to fetch data on the client (client side components) as 
+this would expose the database secrets. Instead, you can fetch the data on the server, and pass it to the component as a prop.
+
+
 packages 
 
 debouncer for wrapping queries 

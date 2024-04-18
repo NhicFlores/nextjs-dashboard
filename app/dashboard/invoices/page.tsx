@@ -7,6 +7,7 @@ import { CreateInvoice } from '@/app/ui/invoices/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
+import { fetchInvoicesPages } from '@/app/lib/data';
  
 export default async function Page({searchParams}: {
   searchParams?: {
@@ -17,6 +18,9 @@ export default async function Page({searchParams}: {
 
   const query = searchParams?.query || '';
   const currPage = Number(searchParams?.page) || 1;
+  const allPages = await fetchInvoicesPages(query);
+  // returns the total number of pages based on the search query. 
+  // For example, if there are 12 invoices that match the search query, and each page displays 6 invoices, then the total number of pages would be 2.
 
   return (
     <div className="w-full">
@@ -31,7 +35,7 @@ export default async function Page({searchParams}: {
         <Table query={query} currentPage={currPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-        {/* <Pagination totalPages={totalPages} /> */}
+        <Pagination totalPages={allPages} />
       </div>
     </div>
   );

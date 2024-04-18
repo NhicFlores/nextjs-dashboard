@@ -16,7 +16,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
     //URLSearchParams: web api that provides utility methods for manipulating the URL query parameters 
     const params = new URLSearchParams(searchParams);
-
+    params.set('page', '1');// every time the user types a new search query, page number is reset to 1
     /*
     When to use the useSearchParams() hook vs. the searchParams prop?
 
