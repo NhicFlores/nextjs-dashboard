@@ -90,7 +90,11 @@ export async function fetchCardData() {
     throw new Error('Failed to fetch card data.');
   }
 }
-
+//NOTE - TODO check on this method to make sure we are always looking at the most up-to-date data 
+//currently getting fired every time the user eters a new character in invoice search box 
+//to reduce the number of queries, use debouncing - setting a timer that resets with every key stroke so 
+// it doesn't finish until they are done typing, at which point the fetch query finally fires 
+// npm i use-debounce 
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
@@ -120,7 +124,7 @@ export async function fetchFilteredInvoices(
       ORDER BY invoices.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-
+    console.log("db queried");
     return invoices.rows;
   } catch (error) {
     console.error('Database Error:', error);

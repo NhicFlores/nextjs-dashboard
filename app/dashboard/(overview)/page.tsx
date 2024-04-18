@@ -7,7 +7,7 @@ import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { Suspense } from "react";
 import { LatestInvoicesSkeleton, RevenueChartSkeleton, CardsSkeleton } from "@/app/ui/skeletons";
 
-//this page is async so we can use await to fetch data 
+//this page is async so we can use await to fetch data  
 
 export default async function Page() {
     //const revenue = await fetchRevenue();

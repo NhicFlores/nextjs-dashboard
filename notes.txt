@@ -1,0 +1,8 @@
+NOTE : all important inline comments  
+TODO : comments that are also reminders or tasks 
+HOW TO : examples of how to use certain syntax/techniques 
+
+packages 
+
+debouncer for wrapping queries 
+npm i use-debounce 
