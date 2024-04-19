@@ -180,6 +180,7 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
+//used to get data for dropdown in create invoice form
 export async function fetchCustomers() {
   //noStore();
   try {

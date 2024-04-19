@@ -10,3 +10,46 @@ packages
 
 debouncer for wrapping queries 
 npm i use-debounce 
+
+creating new invoice form 
+new 'create' route in invoices folder 
+    'create' folder with page.tsx
+
+    import Form from '@/app/ui/invoices/create-form';
+import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import { fetchCustomers } from '@/app/lib/data';
+ 
+export default async function Page() {
+  const customers = await fetchCustomers();
+ 
+  return (
+    <main>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Invoices', href: '/dashboard/invoices' },
+          {
+            label: 'Create Invoice',
+            href: '/dashboard/invoices/create',
+            active: true,
+          },
+        ]}
+      />
+      <Form customers={customers} />
+    </main>
+  );
+}
+
+<form> has: input, dropdown, input of type number and radio, cancel, and submit 
+
+create a  actions.ts in app/lib 
+   'use server';
+    export async function createInvoice(formData: FormData) {} 
+
+import this function in form component and add the action attribute 
+<form action={createInvoice}> asdfa f </form>
+
+Good to know: In HTML, you'd pass a URL to the action attribute. This URL would be the destination where your form data should be submitted (usually an API endpoint).
+
+However, in React, the action attribute is considered a special prop - meaning React builds on top of it to allow actions to be invoked.
+
+Behind the scenes, Server Actions create a POST API endpoint. This is why you don't need to create API endpoints manually when using Server Actions.
