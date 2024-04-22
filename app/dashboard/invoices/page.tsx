@@ -1,5 +1,13 @@
 // invoices page 
 
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  // title: 'Invoices | Acme Dashboard', //this hard codes the company title, so you'd have multiple places if you have to make a change 
+  // make a template in the root layout 
+  title: 'Invoices',
+}; 
+
 import Pagination from '@/app/ui/invoices/pagination';
 import Search from '@/app/ui/search';
 import Table from '@/app/ui/invoices/table';
