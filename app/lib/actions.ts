@@ -6,15 +6,32 @@ import { redirect } from 'next/navigation';
 
 const FormSchema = z.object({
     id: z.string(),
-    customer_id: z.string(),//in tutorial this is customerID - we had an issue with mismatched labels and names
-    amount: z.coerce.number(),
-    status: z.enum(['pending', 'paid']),
+    customer_id: z.string({
+        invalid_type_error: 'Please select a customer',
+    }),//in tutorial this is customerID - we had an issue with mismatched labels and names
+    amount: z.coerce
+        .number()
+        .gt(0, { message: 'Please enter an amount greater than $0.'}),
+    status: z.enum(['pending', 'paid'], {
+        invalid_type_error: 'Please select an invoice status.',
+    }),
     date: z.string(),
 });
 
 const CreateInvoice = FormSchema.omit({ id: true, date: true});
 
-export async function createInvoice(formData: FormData) {
+// this is temporary untul @types/react-dom is updated
+export type State = {
+    errors?: {
+        customer_id?: string[];
+        amount?: string[];
+        status?: string[];
+    };
+    message?: string | null;
+};
+//prevState contains state passed from the useFormState hook - not being used in this example, 
+// but it is a required prop 
+export async function createInvoice(prevState: State, formData: FormData) {
     // console.log('server action: create invoice');
     // //Test 
     // console.log('TESTING FORM DATA');
@@ -32,12 +49,23 @@ export async function createInvoice(formData: FormData) {
     //NOTE HOW TO get form values - 
     //here we are using the get(name) method to extract the values 
     //there are other methods - https://developer.mozilla.org/en-US/docs/Web/API/FormData/append 
-    const { customer_id, amount, status } = CreateInvoice.parse({
+    const validatedFields = CreateInvoice.safeParse({
         customer_id: formData.get('customer_id'),//to match tutorial this would be customerID: formData.get('customerId'),
         amount: formData.get('amount'),
         status: formData.get('status'),
     });
-    
+    //safeParse will return an object containing either a success or error field which allows us to handle 
+    //validation more gracefully without having to put this logic inside the try/catch block 
+    console.log(validatedFields);
+    if(!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to create Invoice.',
+        }
+    }
+
+    const { customer_id, amount, status } = validatedFields.data;
+
     //NOTE good practice to store monetary values in cents in your database 
     //to eliminate JavaScript floating-point errors 
     //and ensure greater accuracy
@@ -65,13 +93,22 @@ export async function createInvoice(formData: FormData) {
 
 const UpdateInvoice = FormSchema.omit({ id: true, date: true});
 
-export async function updateInvoice(id: string, formData: FormData){
+export async function updateInvoice(id: string, prevState: State, formData: FormData){
 
-    const { customer_id, amount, status } = UpdateInvoice.parse({
+    const validatedFields = UpdateInvoice.safeParse({
         customer_id: formData.get('customer_id'),
         amount: formData.get('amount'),
         status: formData.get('status'),
     });
+
+    if(!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to update Invoice',
+        }
+    }
+
+    const { customer_id, amount, status } = validatedFields.data;
 
     const amountInCents = amount * 100;
 
