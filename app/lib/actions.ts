@@ -66,6 +66,7 @@ export async function createInvoice(formData: FormData) {
 const UpdateInvoice = FormSchema.omit({ id: true, date: true});
 
 export async function updateInvoice(id: string, formData: FormData){
+
     const { customer_id, amount, status } = UpdateInvoice.parse({
         customer_id: formData.get('customer_id'),
         amount: formData.get('amount'),
@@ -92,6 +93,7 @@ export async function updateInvoice(id: string, formData: FormData){
 }
 
 export async function deleteInvoice(id: string){
+    
     try {
         await sql`
             DELETE FROM invoices
