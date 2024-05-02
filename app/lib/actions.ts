@@ -85,8 +85,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
             message: 'Database Error: Failed to Create Invoice',
         };
     }
-    
-    //NOTE TO DO still need error handling 
 
     revalidatePath('/dashboard/invoices');
     //console.log("path revalidated");
