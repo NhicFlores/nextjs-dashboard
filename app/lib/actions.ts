@@ -146,6 +146,8 @@ export async function deleteInvoice(id: string){
 }
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
+    console.log("IN SERVER ACTIONS: AUTHENTICATE");
+    console.log(formData.entries);
     try {
         await signIn('credentials', formData);
     } catch (error) {

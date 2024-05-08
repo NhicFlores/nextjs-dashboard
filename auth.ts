@@ -7,6 +7,7 @@ import { sql } from "@vercel/postgres";
 import bcrypt from 'bcrypt';
 
 async function getUser(email: string): Promise<User | undefined> {
+    console.log("IN AUTH: getUser()");
     try {
         const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
         return user.rows[0];
